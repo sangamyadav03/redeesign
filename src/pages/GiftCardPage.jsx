@@ -17,7 +17,6 @@ const GiftCardPage = () => {
   const buttonRef = useRef(null);
 
   useEffect(() => {
-    // Animate header
     gsap.from(headerRef.current, {
       y: -50,
       opacity: 0,
@@ -25,7 +24,6 @@ const GiftCardPage = () => {
       ease: "power3.out",
     });
 
-    // Animate each form section with stagger
     gsap.from(formSectionsRef.current, {
       scrollTrigger: {
         trigger: formSectionsRef.current[0],
@@ -38,7 +36,6 @@ const GiftCardPage = () => {
       ease: "power2.out",
     });
 
-    // Animate button on scroll
     gsap.from(buttonRef.current, {
       scrollTrigger: {
         trigger: buttonRef.current,
@@ -53,7 +50,6 @@ const GiftCardPage = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center py-10 px-4 text-white">
-      {/* Header */}
       <div ref={headerRef} className="text-center mb-10">
         <h1 className="text-2xl text-black font-semibold">Zudio E-Gift Card</h1>
         <p className="text-gray-600 mt-2 text-sm max-w-2xl mx-auto">
@@ -62,9 +58,7 @@ const GiftCardPage = () => {
         </p>
       </div>
 
-      {/* Gift Card Form */}
       <div className="w-full max-w-5xl bg-gray-900 text-white rounded-xl p-8 shadow-lg">
-        {/* Denomination */}
         <section ref={(el) => (formSectionsRef.current[0] = el)}>
           <h2 className="text-lg font-medium text-center border-b border-gray-700 pb-3 mb-6">
             Enter Denomination
@@ -87,7 +81,6 @@ const GiftCardPage = () => {
           </div>
         </section>
 
-        {/* Delivery Options */}
         <section ref={(el) => (formSectionsRef.current[1] = el)}>
           <h3 className="font-semibold mb-2">Delivery Options</h3>
           <div className="flex gap-6 mb-6">
@@ -106,7 +99,6 @@ const GiftCardPage = () => {
           </div>
         </section>
 
-        {/* Delivery Date */}
         <section ref={(el) => (formSectionsRef.current[2] = el)}>
           <h3 className="font-semibold mb-2">Pick a Delivery Date</h3>
           <div className="flex gap-6 mb-6">
@@ -125,7 +117,6 @@ const GiftCardPage = () => {
           </div>
         </section>
 
-        {/* Delivery Mode */}
         <section ref={(el) => (formSectionsRef.current[3] = el)}>
           <h3 className="font-semibold mb-2">Mode of Delivery</h3>
           <div className="flex gap-6 mb-10">
@@ -144,7 +135,6 @@ const GiftCardPage = () => {
           </div>
         </section>
 
-        {/* Theme */}
         <section ref={(el) => (formSectionsRef.current[4] = el)} className="text-center mb-10">
           <h3 className="font-semibold mb-4">Select EGV Design Theme</h3>
           <img
@@ -154,7 +144,6 @@ const GiftCardPage = () => {
           />
         </section>
 
-        {/* Sender & Receiver Details */}
         <section ref={(el) => (formSectionsRef.current[5] = el)} className="grid md:grid-cols-2 gap-8 mb-10">
           <div >
             <h3 className="font-semibold mb-3">Sender's Details</h3>
@@ -172,15 +161,12 @@ const GiftCardPage = () => {
             <textarea placeholder="Write a Message (optional)" className="border w-full rounded-md px-4 py-2 h-20 "></textarea>
           </div>
         </section>
-
-        {/* Buttons */}
         <section ref={buttonRef} className="text-center mb-10">
           <button className="border border-red-500 text-red-500 px-6 py-2 rounded-md hover:bg-red-50 hover:text-black transition">
             PREVIEW E-GIFT CARD
           </button>
         </section>
 
-        {/* Payment Section */}
         <section ref={(el) => (formSectionsRef.current[6] = el)} className="border-t border-gray-700 pt-6 mb-10">
           <h3 className="text-center text-lg font-semibold mb-4">Select Payment Method</h3>
           <div className="flex justify-between items-center max-w-3xl mx-auto">
@@ -208,7 +194,6 @@ const GiftCardPage = () => {
           </div>
         </section>
 
-        {/* Terms & Conditions */}
         <section ref={(el) => (formSectionsRef.current[7] = el)} className="border-t border-gray-700 pt-6 text-gray-300 text-sm leading-6">
           <h3 className="text-center text-lg font-semibold mb-4">Terms & Conditions</h3>
           <ul className="list-disc pl-6 max-w-3xl mx-auto text-left space-y-2">

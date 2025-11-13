@@ -9,15 +9,12 @@ const FootWear = () => {
   const bottomImgRef = useRef(null);
 
   useEffect(() => {
-    // Header animation (slide-down + fade-in)
     gsap.from(headerRef.current, {
       y: -80,
       opacity: 0,
       duration: 1.5,
       ease: "power3.out",
     });
-
-    // ScrollTrigger animation for bottom image
     gsap.from(bottomImgRef.current, {
       scale: 0.8,
       opacity: 0,
@@ -75,7 +72,6 @@ const FootWear = () => {
         </div>
       </div>
 
-      {/* Scroll-trigger image section */}
       <div
         ref={bottomImgRef}
         className="img w-full h-[562px] flex rounded-lg mt-5 overflow-hidden"

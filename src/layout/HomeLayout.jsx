@@ -10,14 +10,12 @@ const HomeLayout = () => {
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Animate logo
     tl.fromTo(
       logoRef.current,
       { y: -100, opacity: 0, scale: 0.8 },
       { y: 0, opacity: 1, scale: 1, duration: 1.2 }
     );
 
-    // Animate NavLinks
     tl.fromTo(
       linksRef.current,
       { y: -30, opacity: 0 },
@@ -40,9 +38,7 @@ const HomeLayout = () => {
 
   return (
     <div className="min-h-screen bg-black text-white font-letrera z-10">
-      {/* ✅ Fixed Header with z-index */}
       <header className="flex w-full h-[70px] bg-black justify-between items-center px-10 py-6 font-letrera fixed top-0 left-0 z-50 shadow-md shadow-white">
-        {/* Logo */}
         <h1 onClick={() => nav('/home')}
           ref={logoRef}
           className="text-5xl font-normal tracking-wide text-white"
@@ -50,7 +46,6 @@ const HomeLayout = () => {
           zudio
         </h1>
 
-        {/* Navigation Links */}
         <nav className="flex gap-16 text-lg">
           {navItems.map((item, index) => (
             <NavLink
@@ -69,7 +64,6 @@ const HomeLayout = () => {
         </nav>
       </header>
 
-      {/* ✅ Offset the main content so it’s not hidden behind the fixed header */}
       <main className="pt-[80px]">
         <Outlet />
       </main>

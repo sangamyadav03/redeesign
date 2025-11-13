@@ -1,13 +1,11 @@
-// ✅ AuthLayout.jsx
 import React, { useState } from "react";
 import Register from "../LR/Register";
-import Login from "../LR/Login"; // ✅ FIX: Added missing import for Login
+import Login from "../LR/Login"; 
 const AuthLayout = () => {
   const [toggle, setToggle] = useState(true);
 
   return (
     <div>
-      {/* ✅ FIX: Made logic more clear (if toggle is true -> show Register, else Login) */}
       {toggle ? (
         <Register setToggle={setToggle} />
       ) : (

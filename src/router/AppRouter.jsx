@@ -1,4 +1,3 @@
-// src/router/AppRouter.jsx
 import React from "react";
 import { Route, Routes } from "react-router";
 import AuthLayout from "../layout/AuthLayout";

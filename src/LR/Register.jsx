@@ -7,7 +7,7 @@ const Register = ({ setToggle }) => {
   const onSubmit = (data) => {
     localStorage.setItem("userData", JSON.stringify(data));
     alert("Account created successfully!");
-    setToggle(false); // ✅ Go to Login
+    setToggle(false); 
   };
 
   return (

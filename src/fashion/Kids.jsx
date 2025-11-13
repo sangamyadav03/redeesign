@@ -9,7 +9,7 @@ const Kids = () => {
   const bottomImgRef = useRef(null);
 
   useEffect(() => {
-    // Header animation (fade-in + slide down)
+   
     gsap.from(headerRef.current, {
       y: -80,
       opacity: 0,
@@ -17,7 +17,6 @@ const Kids = () => {
       ease: "power3.out",
     });
 
-    // Scroll-trigger animation for bottom image
     gsap.from(bottomImgRef.current, {
       scale: 0.8,
       opacity: 0,

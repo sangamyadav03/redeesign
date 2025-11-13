@@ -16,7 +16,6 @@ const Beauty = () => {
   const imgRef = useRef(null);
 
   useEffect(() => {
-    // Header GSAP animation (on load)
     gsap.from(headerRef.current, {
       y: -80,
       opacity: 0,
@@ -24,7 +23,6 @@ const Beauty = () => {
       ease: "power3.out",
     });
 
-    // ScrollTrigger animation for bottom image
     gsap.from(imgRef.current, {
       y: 100,
       opacity: 0,

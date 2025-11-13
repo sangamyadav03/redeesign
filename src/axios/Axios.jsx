@@ -11,7 +11,6 @@ const Axios = () => {
     try {
       const response = await axios.get("https://fakestoreapi.com/products");
       setProducts(response.data);
-      console.log(response.data); // ✅ Check API data in console
     } catch (error) {
       console.log(error);
     } finally {
@@ -38,7 +37,6 @@ const Axios = () => {
         Products
       </h2>
 
-      {/* ✅ Product Grid */}
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {products.length > 0 ? (
           products.map((item) => (
@@ -65,8 +63,10 @@ const Axios = () => {
                 <button className="bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600 transition">
                   Add to Cart
                 </button>
-                <button onClick={() => nav('/buyform')}
-                className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition">
+                <button
+                  onClick={() => nav('/buyform')}
+                  className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition"
+                >
                   Buy Now
                 </button>
               </div>
@@ -79,7 +79,6 @@ const Axios = () => {
         )}
       </div>
       
-      {/* Footer Section */}
       <footer className="bg-black text-white py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-sm">
           <div className="space-y-2">
@@ -108,8 +107,7 @@ const Axios = () => {
               </a>
             </div>
             <p className="relative right-43">
-              Contact us -{" "}
-              <a className="hover:underline">Zudiohelp@trent-tata.com</a>
+              Contact us - <a className="hover:underline">Zudiohelp@trent-tata.com</a>
             </p>
             <p>
               Zudio Retail Business Associate Enquiry -{" "}

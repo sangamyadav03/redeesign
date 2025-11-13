@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { NavLink } from "react-router-dom"; // ✅ FIXED import
+import { NavLink } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +12,7 @@ const HomePage = () => {
   const bottomLineRef = useRef(null);
   const topLineContentRef = useRef(null);
   const bottomLineContentRef = useRef(null);
-  const routesRef = useRef(null); // ✅ new ref for routes div
+  const routesRef = useRef(null);
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -66,7 +66,6 @@ const HomePage = () => {
       ease: "linear",
     });
 
-    // ✅ ROUTES animation (slide in from left)
     gsap.fromTo(
       routesRef.current,
       { x: -150, opacity: 0, rotateY: 45 },
@@ -76,7 +75,7 @@ const HomePage = () => {
         rotateY: 0,
         duration: 1.5,
         ease: "power3.out",
-        delay: 1, // slight delay after letters animation
+        delay: 1,
       }
     );
   }, []);
@@ -97,10 +96,8 @@ const HomePage = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/60 z-0"></div>
 
-        {/* 🟩 ROUTES MENU (animated) */}
         <div
           ref={routesRef}
           className="routes w-30 h-60 z-30 top-80 left-10 text-gray-400 font-semibold flex flex-col gap-5 text-xl fixed"
@@ -122,7 +119,6 @@ const HomePage = () => {
           </NavLink>
         </div>
 
-        {/* 🔹 TOP MARQUEE LINE */}
         <div
           ref={topLineRef}
           className="relative w-full h-11 bg-white text-gray-600 overflow-hidden mt-10 z-10"
@@ -139,7 +135,6 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* 🔠 BIG ZUDIO LETTERS */}
         <div className="name text-[18rem] flex space-x-6 select-none mt-10 z-10">
           {letters.map((char, index) => (
             <span
@@ -152,7 +147,6 @@ const HomePage = () => {
           ))}
         </div>
 
-        {/* 🔹 BOTTOM MARQUEE LINE */}
         <div
           ref={bottomLineRef}
           className="relative w-full h-11 bg-white text-gray-600 overflow-hidden mt-10 z-10"
@@ -170,7 +164,6 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
       <div className="relative h-[730px] w-full bg-white flex justify-center">
         <h1 className="text-8xl text-black absolute top-14 z-10">
           the zudio runway
@@ -178,14 +171,13 @@ const HomePage = () => {
 
         <div className="img w-full h-full overflow-hidden z-0">
           <img
-            className="w-auto relative left-40 top-5 scale-[1.29] origin-center transition-transform duration-700 hover:scale-[1.15]"
+            className="w-full scale-[1.29] origin-center transition-transform duration-700 hover:scale-[1.15]"
             src="https://i.pinimg.com/1200x/0d/4b/d2/0d4bd2feace001bac5816328cad0d709.jpg"
             alt=""
           />
         </div>
       </div>
 
-      {/* Footer Section */}
       <footer className="bg-black text-white py-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-sm">
           <div className="space-y-2">
@@ -214,8 +206,7 @@ const HomePage = () => {
               </a>
             </div>
             <p className="relative right-43">
-              Contact us -{" "}
-              <a className="hover:underline">Zudiohelp@trent-tata.com</a>
+              Contact us - <a className="hover:underline">Zudiohelp@trent-tata.com</a>
             </p>
             <p>
               Zudio Retail Business Associate Enquiry -{" "}

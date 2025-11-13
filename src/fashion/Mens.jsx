@@ -9,7 +9,6 @@ const Mens = () => {
   const imgRef = useRef(null);
 
   useEffect(() => {
-    // Header animation (slide from top + fade-in)
     gsap.from(headerRef.current, {
       y: -80,
       opacity: 0,
@@ -17,7 +16,6 @@ const Mens = () => {
       ease: "power3.out",
     });
 
-    // Image scroll-trigger animation
     gsap.from(imgRef.current, {
       opacity: 0,
       scale: 0.9,

@@ -36,7 +36,6 @@ const Women = () => {
     scroll();
   }, []);
 
-  // Header Animation — from top to bottom
   useEffect(() => {
     const header = headerRef.current;
     gsap.from(header, {
@@ -48,7 +47,6 @@ const Women = () => {
     });
   }, []);
 
-  // ScrollTrigger Animation for bottom image
   useEffect(() => {
     const imgSection = imgSectionRef.current;
     gsap.from(imgSection, {
