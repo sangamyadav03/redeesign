@@ -39,12 +39,12 @@ const Axios = () => {
       </h2>
 
       {/* ✅ Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {products.length > 0 ? (
           products.map((item) => (
             <div
               key={item.id}
-              className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer p-5 flex flex-col items-center w-60"
+              className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer p-5 flex flex-col items-center w-70"
             >
               <h1 className="text-xl font-semibold absolute top-0 left-2 text-black">zudio</h1>
               <img

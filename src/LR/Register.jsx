@@ -11,7 +11,8 @@ const Register = ({ setToggle }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <h1 className="text-4xl font-bold text-white">Zudio</h1>
       <div className="bg-gray-800/80 p-8 rounded-2xl shadow-lg w-96 border border-gray-700">
         <h2 className="text-3xl text-white text-center mb-6">Register</h2>
 
