@@ -2,17 +2,17 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 const Register = ({ setToggle }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     localStorage.setItem("userData", JSON.stringify(data));
-    alert("Account created successfully!");
-    setToggle(false); 
+    alert(" Account created successfully! ");
+    setToggle(false);
   };
 
   return (
     <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <h1 className="text-4xl font-bold text-white">Zudio</h1>
+    
       <div className="bg-gray-800/80 p-8 rounded-2xl shadow-lg w-96 border border-gray-700">
         <h2 className="text-3xl text-white text-center mb-6">Register</h2>
 
@@ -21,33 +21,30 @@ const Register = ({ setToggle }) => {
             <label className="block text-sm text-gray-300 mb-1">Name</label>
             <input
               type="text"
-              {...register("name", { required: "Name is required" })}
+              {...register("name", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
               placeholder="Enter your name"
             />
-            {errors.name && <p className="text-red-400 text-sm">{errors.name.message}</p>}
           </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Email</label>
             <input
               type="text"
-              {...register("email", { required: "Email is required" })}
+              {...register("email", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
               placeholder="Enter your email"
             />
-            {errors.email && <p className="text-red-400 text-sm">{errors.email.message}</p>}
           </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Password</label>
             <input
               type="text"
-              {...register("password", { required: "Password is required" })}
+              {...register("password", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
               placeholder="Enter your password"
             />
-            {errors.password && <p className="text-red-400 text-sm">{errors.password.message}</p>}
           </div>
 
           <button

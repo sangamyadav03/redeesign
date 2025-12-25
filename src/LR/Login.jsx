@@ -5,11 +5,7 @@ import { useNavigate } from "react-router";
 const Login = ({ setToggle }) => {
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
     const storedUser = JSON.parse(localStorage.getItem("userData"));
@@ -19,7 +15,7 @@ const Login = ({ setToggle }) => {
       data.password === storedUser.password
     ) {
       alert(`Welcome back, ${storedUser.name}!`);
-     localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("isLoggedIn", "true");
       navigate("/home");
     } else {
       alert("Invalid email or password. Please try again.");
@@ -29,9 +25,7 @@ const Login = ({ setToggle }) => {
 
   return (
     <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      <h1 className="text-4xl font-bold text-white">Zudio</h1>
       <div className="bg-gray-800/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg w-96 border border-gray-700">
-      
         <h2 className="text-3xl font-semibold text-center text-white mb-6">
           Login
         </h2>
@@ -41,28 +35,20 @@ const Login = ({ setToggle }) => {
             <label className="block text-sm text-gray-300 mb-1">Email</label>
             <input
               type="text"
-              {...register("email", { required: "Email is required" })}
+              {...register("email", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none border border-transparent focus:border-blue-500 transition-all placeholder-gray-400 hover:border-blue-400"
               placeholder="Enter your email"
             />
-            {errors.email && (
-              <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
-            )}
           </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Password</label>
             <input
               type="password"
-              {...register("password", { required: "Password is required" })}
+              {...register("password", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none border border-transparent focus:border-blue-500 transition-all placeholder-gray-400 hover:border-blue-400"
               placeholder="Enter your password"
             />
-            {errors.password && (
-              <p className="text-red-400 text-sm mt-1">
-                {errors.password.message}
-              </p>
-            )}
           </div>
 
           <button
