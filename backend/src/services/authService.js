@@ -15,7 +15,11 @@ const registerUser = async ({ name, email, password }) => {
   }
 
   const user = await User.create({ name: name.trim(), email: normalizedEmail, password });
-  const token = generateToken({ id: user._id, email: user.email, role: user.role });
+  const token = generateToken({
+    id: String(user._id),
+    email: user.email,
+    role: user.role,
+  });
 
   return {
     user: user.toSafeObject(),
@@ -40,7 +44,11 @@ const loginUser = async ({ email, password }) => {
     throw new ApiError('Invalid email or password.', 401);
   }
 
-  const token = generateToken({ id: user._id, email: user.email, role: user.role });
+  const token = generateToken({
+    id: String(user._id),
+    email: user.email,
+    role: user.role,
+  });
 
   return {
     user: user.toSafeObject(),

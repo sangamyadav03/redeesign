@@ -14,6 +14,7 @@
     "express": "^4.19.0",
     "joi": "^17.13.0",
     "jsonwebtoken": "^9.0.1",
-    "mongoose": "^8.4.0"
+    "mongoose": "^8.4.0",
+    "razorpay": "^2.9.6"
   }
 }

@@ -1,5 +1,5 @@
 const { registerUser, loginUser } = require('../services/authService');
-const { sendSuccess, sendError } = require('../utils/ApiResponse');
+const { sendSuccess } = require('../utils/ApiResponse');
 
 const register = async (req, res, next) => {
   try {
@@ -20,7 +20,8 @@ const login = async (req, res, next) => {
 };
 
 const me = (req, res) => {
-  return sendSuccess(res, 200, { user: req.user }, 'Authenticated user profile loaded.');
+  const user = typeof req.user.toSafeObject === 'function' ? req.user.toSafeObject() : req.user;
+  return sendSuccess(res, 200, { user }, 'Authenticated user profile loaded.');
 };
 
 module.exports = { register, login, me };
