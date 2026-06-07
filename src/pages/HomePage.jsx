@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NavLink } from "react-router-dom";
+import api from "../api/client";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,8 +14,20 @@ const HomePage = () => {
   const topLineContentRef = useRef(null);
   const bottomLineContentRef = useRef(null);
   const routesRef = useRef(null);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
   useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const response = await api.get("/products");
+        setFeaturedProducts(response.data.slice(0, 4));
+      } catch (error) {
+        console.error("Failed to load products", error);
+      }
+    };
+
+    loadProducts();
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: titleRef.current,
@@ -100,7 +113,7 @@ const HomePage = () => {
 
         <div
           ref={routesRef}
-          className="routes w-30 h-60 z-30 top-80 left-10 text-gray-400 font-semibold flex flex-col gap-5 text-xl fixed"
+          className="routes z-30 top-24 left-4 right-4 md:top-28 md:left-10 md:w-32 md:h-60 md:fixed md:flex md:flex-col md:gap-5 text-sm md:text-xl text-gray-200 bg-black/60 md:bg-transparent backdrop-blur md:backdrop-blur-none p-3 md:p-0 rounded-2xl shadow-lg md:shadow-none"
         >
           <NavLink to={"beauty"}>
             <span className="hover:text-green-400">Beauty</span>
@@ -135,7 +148,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="name text-[18rem] flex space-x-6 select-none mt-10 z-10">
+        <div className="name text-[4rem] md:text-[10rem] lg:text-[18rem] flex flex-wrap justify-center gap-3 md:gap-6 select-none mt-10 z-10 leading-none">
           {letters.map((char, index) => (
             <span
               key={index}
@@ -164,8 +177,37 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="relative h-[730px] w-full bg-white flex justify-center">
-        <h1 className="text-8xl text-black absolute top-14 z-10">
+      <section className="px-4 py-10 md:px-8 lg:px-12 bg-white text-black">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+            <div>
+              <p className="uppercase tracking-[0.35em] text-sm text-rose-500">Live storefront</p>
+              <h2 className="text-3xl md:text-5xl font-semibold">The latest looks, now powered by our backend</h2>
+            </div>
+            <p className="max-w-xl text-gray-600">Fresh products and gift-card requests are now handled by a real API, so the experience feels connected from browsing to checkout.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            {featuredProducts.map((product) => (
+              <article key={product.id} className="rounded-3xl border border-gray-200 bg-white p-4 shadow-sm hover:-translate-y-1 transition-transform duration-300">
+                <img src={product.image} alt={product.title} className="h-44 w-full rounded-2xl object-cover" />
+                <div className="mt-4 space-y-2">
+                  <p className="text-xs uppercase tracking-[0.25em] text-rose-500">{product.category}</p>
+                  <h3 className="text-xl font-semibold text-gray-900">{product.title}</h3>
+                  <p className="text-sm text-gray-600 line-clamp-3">{product.description}</p>
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-lg font-bold text-black">₹{product.price}</span>
+                    <button className="rounded-full bg-black px-4 py-2 text-sm text-white">View look</button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="relative min-h-[420px] md:h-[730px] w-full bg-white flex justify-center overflow-hidden">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl text-black absolute top-6 md:top-14 z-10 text-center px-4">
           the zudio runway
         </h1>
 

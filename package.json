@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:backend": "cd backend && npm run dev",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ignore-pattern backend",
     "preview": "vite preview"
   },
   "dependencies": {

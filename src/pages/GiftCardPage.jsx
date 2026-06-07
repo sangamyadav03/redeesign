@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import api from "../api/client";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,10 +12,40 @@ const GiftCardPage = () => {
   const [amount, setAmount] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [sender, setSender] = useState({ firstName: "", lastName: "", email: "", phone: "" });
+  const [receiver, setReceiver] = useState({ firstName: "", lastName: "", email: "", message: "" });
 
   const headerRef = useRef(null);
   const formSectionsRef = useRef([]);
   const buttonRef = useRef(null);
+
+  const handleSubmit = async () => {
+    if (!agreeTerms) {
+      setStatusMessage("Please accept the terms and conditions to continue.");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      await api.post("/submissions", {
+        type: "gift-card",
+        amount: Number(amount) || 0,
+        quantity: Number(quantity) || 1,
+        deliveryOption,
+        deliveryDate,
+        deliveryMode,
+        sender,
+        receiver,
+      }, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      setStatusMessage("Gift card request received successfully. Our team will contact you shortly.");
+    } catch (error) {
+      setStatusMessage("Unable to save your request right now. Please try again.");
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     gsap.from(headerRef.current, {
@@ -83,7 +114,7 @@ const GiftCardPage = () => {
 
         <section ref={(el) => (formSectionsRef.current[1] = el)}>
           <h3 className="font-semibold mb-2">Delivery Options</h3>
-          <div className="flex gap-6 mb-6">
+          <div className="flex flex-wrap gap-4 md:gap-6 mb-6">
             {["gift", "self"].map((opt) => (
               <label key={opt} className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -101,7 +132,7 @@ const GiftCardPage = () => {
 
         <section ref={(el) => (formSectionsRef.current[2] = el)}>
           <h3 className="font-semibold mb-2">Pick a Delivery Date</h3>
-          <div className="flex gap-6 mb-6">
+          <div className="flex flex-wrap gap-4 md:gap-6 mb-6">
             {["today", "later"].map((date) => (
               <label key={date} className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -119,7 +150,7 @@ const GiftCardPage = () => {
 
         <section ref={(el) => (formSectionsRef.current[3] = el)}>
           <h3 className="font-semibold mb-2">Mode of Delivery</h3>
-          <div className="flex gap-6 mb-10">
+          <div className="flex flex-wrap gap-4 md:gap-6 mb-10">
             {["email", "sms", "both"].map((mode) => (
               <label key={mode} className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -145,27 +176,29 @@ const GiftCardPage = () => {
         </section>
 
         <section ref={(el) => (formSectionsRef.current[5] = el)} className="grid md:grid-cols-2 gap-8 mb-10">
-          <div >
+          <div>
             <h3 className="font-semibold mb-3">Sender's Details</h3>
-            <input type="text" placeholder="First Name" className="border w-full rounded-md px-4 py-2 mb-3 " />
-            <input type="text" placeholder="Last Name" className="border w-full rounded-md px-4 py-2 mb-3 " />
-            <input type="email" placeholder="Email Address" className="border w-full rounded-md px-4 py-2 mb-3 " />
-            <input type="tel" placeholder="Mobile Number" className="border w-full rounded-md px-4 py-2 " />
+            <input type="text" value={sender.firstName} onChange={(e)=>setSender({...sender, firstName:e.target.value})} placeholder="First Name" className="border w-full rounded-md px-4 py-2 mb-3 text-black" />
+            <input type="text" value={sender.lastName} onChange={(e)=>setSender({...sender, lastName:e.target.value})} placeholder="Last Name" className="border w-full rounded-md px-4 py-2 mb-3 text-black" />
+            <input type="email" value={sender.email} onChange={(e)=>setSender({...sender, email:e.target.value})} placeholder="Email Address" className="border w-full rounded-md px-4 py-2 mb-3 text-black" />
+            <input type="tel" value={sender.phone} onChange={(e)=>setSender({...sender, phone:e.target.value})} placeholder="Mobile Number" className="border w-full rounded-md px-4 py-2 text-black" />
           </div>
 
           <div>
             <h3 className="font-semibold mb-3">Receiver's Details</h3>
-            <input type="text" placeholder="First Name" className="border w-full rounded-md px-4 py-2 mb-3 " />
-            <input type="text" placeholder="Last Name" className="border w-full rounded-md px-4 py-2 mb-3 " />
-            <input type="email" placeholder="Email Address" className="border w-full rounded-md px-4 py-2 mb-3 " />
-            <textarea placeholder="Write a Message (optional)" className="border w-full rounded-md px-4 py-2 h-20 "></textarea>
+            <input type="text" value={receiver.firstName} onChange={(e)=>setReceiver({...receiver, firstName:e.target.value})} placeholder="First Name" className="border w-full rounded-md px-4 py-2 mb-3 text-black" />
+            <input type="text" value={receiver.lastName} onChange={(e)=>setReceiver({...receiver, lastName:e.target.value})} placeholder="Last Name" className="border w-full rounded-md px-4 py-2 mb-3 text-black" />
+            <input type="email" value={receiver.email} onChange={(e)=>setReceiver({...receiver, email:e.target.value})} placeholder="Email Address" className="border w-full rounded-md px-4 py-2 mb-3 text-black" />
+            <textarea value={receiver.message} onChange={(e)=>setReceiver({...receiver, message:e.target.value})} placeholder="Write a Message (optional)" className="border w-full rounded-md px-4 py-2 h-20 text-black"></textarea>
           </div>
         </section>
-        <section ref={buttonRef} className="text-center mb-10">
-          <button className="border border-red-500 text-red-500 px-6 py-2 rounded-md hover:bg-red-50 hover:text-black transition">
-            PREVIEW E-GIFT CARD
+        <section ref={buttonRef} className="text-center mb-6">
+          <button onClick={handleSubmit} className="border border-red-500 text-red-500 px-6 py-2 rounded-md hover:bg-red-500 hover:text-white transition">
+            SEND GIFT CARD REQUEST
           </button>
         </section>
+
+        {statusMessage && <p className="text-center text-sm text-emerald-300 mb-6">{statusMessage}</p>}
 
         <section ref={(el) => (formSectionsRef.current[6] = el)} className="border-t border-gray-700 pt-6 mb-10">
           <h3 className="text-center text-lg font-semibold mb-4">Select Payment Method</h3>
@@ -184,6 +217,7 @@ const GiftCardPage = () => {
 
           <div className="text-center mt-6">
             <button
+              onClick={handleSubmit}
               className={`${
                 agreeTerms ? "bg-red-500 hover:bg-red-600" : "bg-gray-400 cursor-not-allowed"
               } text-white px-8 py-3 rounded-lg transition`}

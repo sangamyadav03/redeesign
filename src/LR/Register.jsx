@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { registerUser } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 const Register = ({ setToggle }) => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    localStorage.setItem("userData", JSON.stringify(data));
-    alert("Account created successfully!");
-    setToggle(false); 
-  };
+  const onSubmit = async (data) => {
+    setIsSubmitting(true);
+    setErrorMessage("");
 
+    try {
+      const response = await registerUser(data);
+      login({ token: response.token, user: response.user });
+      navigate("/home");
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "Registration failed.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+ 
   return (
-    <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-gray-900">
       <h1 className="text-4xl font-bold text-white">Zudio</h1>
       <div className="bg-gray-800/80 p-8 rounded-2xl shadow-lg w-96 border border-gray-700">
         <h2 className="text-3xl text-white text-center mb-6">Register</h2>
@@ -42,19 +59,29 @@ const Register = ({ setToggle }) => {
           <div>
             <label className="block text-sm text-gray-300 mb-1">Password</label>
             <input
-              type="text"
-              {...register("password", { required: "Password is required" })}
+              type={showPassword ? "text" : "password"}
+              {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password should be at least 6 characters" } })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
               placeholder="Enter your password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="mt-2 text-xs text-blue-300 hover:text-blue-200"
+            >
+              {showPassword ? "Hide password" : "Show password"}
+            </button>
             {errors.password && <p className="text-red-400 text-sm">{errors.password.message}</p>}
           </div>
 
+          {errorMessage && <p className="text-red-400 text-sm">{errorMessage}</p>}
+
           <button
             type="submit"
-            className="w-full py-3 rounded-md font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300"
+            disabled={isSubmitting}
+            className="w-full py-3 rounded-md font-semibold text-white bg-linear-to-r from-blue-600 to-indigo-600 transition-all duration-300 disabled:opacity-60"
           >
-            Register
+            {isSubmitting ? "Creating account..." : "Register"}
           </button>
         </form>
 

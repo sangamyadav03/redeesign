@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router";
+import api from "../api/client";
 
 const Axios = () => {
   const nav = useNavigate();
@@ -9,7 +9,7 @@ const Axios = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("https://fakestoreapi.com/products");
+      const response = await api.get("/products");
       setProducts(response.data);
     } catch (error) {
       console.log(error);
@@ -37,12 +37,12 @@ const Axios = () => {
         Products
       </h2>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      <div className="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto px-2 md:px-4">
         {products.length > 0 ? (
           products.map((item) => (
             <div
               key={item.id}
-              className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer p-5 flex flex-col items-center w-70"
+              className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-transform hover:-translate-y-1 cursor-pointer p-5 flex flex-col items-center w-full"
             >
               <h1 className="text-xl font-semibold absolute top-0 left-2 text-black">zudio</h1>
               <img

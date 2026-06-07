@@ -59,7 +59,7 @@ const Beauty = () => {
           {[...images, ...images].map((img, i) => (
             <div
               key={i}
-              className="relative min-w-[300px] sm:min-w-[350px] h-[450px] rounded-lg overflow-hidden flex-shrink-0"
+              className="relative min-w-[300px] sm:min-w-[350px] h-[450px] rounded-lg overflow-hidden shrink-0"
             >
               <img
                 src={img}
