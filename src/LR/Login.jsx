@@ -11,12 +11,9 @@ const Login = ({ setToggle }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
+<<<<<<< HEAD
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setErrorMessage("");
@@ -24,6 +21,17 @@ const Login = ({ setToggle }) => {
     try {
       const response = await loginUser(data);
       login({ token: response.token, user: response.user });
+=======
+  const onSubmit = (data) => {
+    const storedUser = JSON.parse(localStorage.getItem("userData"));
+    if (
+      storedUser &&
+      data.email === storedUser.email &&
+      data.password === storedUser.password
+    ) {
+      alert(`Welcome back, ${storedUser.name}!`);
+      localStorage.setItem("isLoggedIn", "true");
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a
       navigate("/home");
     } catch (error) {
       setErrorMessage(error.response?.data?.message || "Invalid email or password. Please try again.");
@@ -33,9 +41,12 @@ const Login = ({ setToggle }) => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-gray-900">
+=======
+    <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a
       <div className="bg-gray-800/80 backdrop-blur-lg p-8 rounded-2xl shadow-lg w-96 border border-gray-700">
-      
         <h2 className="text-3xl font-semibold text-center text-white mb-6">
           Login
         </h2>
@@ -45,18 +56,16 @@ const Login = ({ setToggle }) => {
             <label className="block text-sm text-gray-300 mb-1">Email</label>
             <input
               type="text"
-              {...register("email", { required: "Email is required" })}
+              {...register("email", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none border border-transparent focus:border-blue-500 transition-all placeholder-gray-400 hover:border-blue-400"
               placeholder="Enter your email"
             />
-            {errors.email && (
-              <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
-            )}
           </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Password</label>
             <input
+<<<<<<< HEAD
               type={showPassword ? "text" : "password"}
               {...register("password", { required: "Password is required" })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none border border-transparent focus:border-blue-500 transition-all placeholder-gray-400 hover:border-blue-400"
@@ -74,6 +83,13 @@ const Login = ({ setToggle }) => {
                 {errors.password.message}
               </p>
             )}
+=======
+              type="password"
+              {...register("password", { required: true })}
+              className="w-full p-3 rounded-md bg-gray-700 text-white outline-none border border-transparent focus:border-blue-500 transition-all placeholder-gray-400 hover:border-blue-400"
+              placeholder="Enter your password"
+            />
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a
           </div>
 
           {errorMessage && <p className="text-red-400 text-sm">{errorMessage}</p>}

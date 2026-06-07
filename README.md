@@ -38,6 +38,7 @@ frontend/src/
 - MongoDB running locally
 - Razorpay test/live API keys (for payments)
 
+<<<<<<< HEAD
 ## Setup
 
 ### 1. MongoDB
@@ -121,3 +122,7 @@ npm run dev:backend  # Start backend
 npm run build        # Production build
 npm run lint         # ESLint
 ```
+=======
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+"# challange" 
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a

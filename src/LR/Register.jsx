@@ -5,6 +5,7 @@ import { registerUser } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
 
 const Register = ({ setToggle }) => {
+<<<<<<< HEAD
   const navigate = useNavigate();
   const { login } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +16,15 @@ const Register = ({ setToggle }) => {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setErrorMessage("");
+=======
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    localStorage.setItem("userData", JSON.stringify(data));
+    alert(" Account created successfully! ");
+    setToggle(false);
+  };
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a
 
     try {
       const response = await registerUser(data);
@@ -28,8 +38,13 @@ const Register = ({ setToggle }) => {
   };
  
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-linear-to-br from-gray-900 via-gray-800 to-gray-900">
       <h1 className="text-4xl font-bold text-white">Zudio</h1>
+=======
+    <div className="min-h-screen flex gap-10 flex-col items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a
       <div className="bg-gray-800/80 p-8 rounded-2xl shadow-lg w-96 border border-gray-700">
         <h2 className="text-3xl text-white text-center mb-6">Register</h2>
 
@@ -38,27 +53,26 @@ const Register = ({ setToggle }) => {
             <label className="block text-sm text-gray-300 mb-1">Name</label>
             <input
               type="text"
-              {...register("name", { required: "Name is required" })}
+              {...register("name", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
               placeholder="Enter your name"
             />
-            {errors.name && <p className="text-red-400 text-sm">{errors.name.message}</p>}
           </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Email</label>
             <input
               type="text"
-              {...register("email", { required: "Email is required" })}
+              {...register("email", { required: true })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
               placeholder="Enter your email"
             />
-            {errors.email && <p className="text-red-400 text-sm">{errors.email.message}</p>}
           </div>
 
           <div>
             <label className="block text-sm text-gray-300 mb-1">Password</label>
             <input
+<<<<<<< HEAD
               type={showPassword ? "text" : "password"}
               {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password should be at least 6 characters" } })}
               className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
@@ -72,6 +86,13 @@ const Register = ({ setToggle }) => {
               {showPassword ? "Hide password" : "Show password"}
             </button>
             {errors.password && <p className="text-red-400 text-sm">{errors.password.message}</p>}
+=======
+              type="text"
+              {...register("password", { required: true })}
+              className="w-full p-3 rounded-md bg-gray-700 text-white outline-none"
+              placeholder="Enter your password"
+            />
+>>>>>>> f11f18e5877cb6d3de8062d5774d3e59cb4d676a
           </div>
 
           {errorMessage && <p className="text-red-400 text-sm">{errorMessage}</p>}
