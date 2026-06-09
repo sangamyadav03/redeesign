@@ -1,12 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { data } from "../data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const FootWear = () => {
   const headerRef = useRef(null);
   const bottomImgRef = useRef(null);
+  const shoesProducts = data.filter(
+  (item) => item.category?.toLowerCase() === "shoes"
+);
 
   useEffect(() => {
     gsap.from(headerRef.current, {
@@ -71,6 +75,50 @@ const FootWear = () => {
           ))}
         </div>
       </div>
+
+      {/* Footwear Products Section */}
+<section className="mt-20">
+  <h1 className="text-5xl font-bold text-center mb-12">
+    Footwear Collection
+  </h1>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {shoesProducts.map((item) => (
+      <div
+        key={item.id}
+        className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+      >
+        <div className="h-72 overflow-hidden">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="p-5">
+          <h2 className="text-xl font-bold mb-2">
+            {item.name}
+          </h2>
+
+          <p className="text-gray-400 text-sm mb-4 min-h-[45px]">
+            {item.description}
+          </p>
+
+          <div className="flex items-center justify-between">
+            <span className="text-green-400 text-2xl font-bold">
+              ₹{item.price}
+            </span>
+
+            <button className="bg-white text-black px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition">
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
 
       <div
         ref={bottomImgRef}

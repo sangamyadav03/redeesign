@@ -1,4 +1,8 @@
 const errorMiddleware = (err, req, res, next) => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.error('[Error]', err);
+  }
+
   if (err.name === 'ValidationError') {
     const message = Object.values(err.errors)
       .map((e) => e.message)

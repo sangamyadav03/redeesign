@@ -136,7 +136,7 @@ const HomePage = () => {
 
         <div
           ref={routesRef}
-          className="routes z-30 top-24 left-4 right-4 md:top-28 md:left-10 md:w-32 md:h-60 md:fixed md:flex md:flex-col md:gap-5 text-sm md:text-xl text-gray-200 bg-black/60 md:bg-transparent backdrop-blur md:backdrop-blur-none p-3 md:p-0 rounded-2xl shadow-lg md:shadow-none"
+          className="routes z-30 top-24 left-10 right-4 md:top-82 md:left-10 md:w-32 md:h-60 md:fixed md:flex md:flex-col md:gap-5 text-sm md:text-xl text-gray-200 bg-black/60 md:bg-transparent backdrop-blur md:backdrop-blur-none p-3 md:p-0 rounded-2xl shadow-lg md:shadow-none"
         >
           <NavLink to={"beauty"}>
             <span className="hover:text-green-400">Beauty</span>
@@ -156,6 +156,7 @@ const HomePage = () => {
         </div>
 
         <div
+
           ref={topLineRef}
           className="relative w-full h-11 bg-white text-gray-600 overflow-hidden mt-10 z-10"
         >

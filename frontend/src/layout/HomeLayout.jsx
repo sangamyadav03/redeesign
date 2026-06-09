@@ -1,115 +1,144 @@
-import React, { useEffect, useRef, useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router";
-import { gsap } from "gsap";
-import { useAuth } from "../hooks/useAuth";
+import React, { useState } from 'react';
+import { NavLink, Outlet, useNavigate } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
+import { useCart } from '../hooks/useCart';
+
+const categories = [
+  { name: 'Beauty', path: 'beauty' },
+  { name: 'Mens', path: 'mens' },
+  { name: 'Womens', path: 'women' },
+  { name: 'Kids', path: 'kids' },
+  { name: 'Footwear', path: 'footwear' },
+  { name: 'Near Me', path: 'zudio-near-you' },
+  { name: 'Products', path: '/buyform' },
+];
 
 const HomeLayout = () => {
-  const logoRef = useRef(null);
-  const linksRef = useRef([]);
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const { logout, user } = useAuth();
+  const { cartCount } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
-    tl.fromTo(
-      logoRef.current,
-      { y: -100, opacity: 0, scale: 0.8 },
-      { y: 0, opacity: 1, scale: 1, duration: 1.2 }
-    );
-
-    tl.fromTo(
-      linksRef.current,
-      { y: -30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.15,
-      },
-      "-=0.6"
-    );
-  }, []);
-
-  const navItems = [
-    { name: "Zudio Near You", path: "zudio-near-you" },
-    { name: "Z Products", path: "z-world" },
-    { name: "Z Stories", path: "z-stories" },
-    { name: "Gift Card", path: "gift-card" },
-  ];
+  const navLinkClass = ({ isActive }) =>
+    `transition-all duration-300 ${
+      isActive
+        ? 'text-white'
+        : 'text-white/70 hover:text-white'
+    }`;
 
   return (
-    <div className="min-h-screen bg-black text-white font-letrera z-10">
-      <header className="w-full bg-black/95 backdrop-blur-md fixed top-0 left-0 z-50 shadow-md shadow-white/10">
-        <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-10 font-letrera">
-          <h1 onClick={() => nav('/home')}
-            ref={logoRef}
-            className="text-3xl font-normal tracking-wide text-white md:text-5xl cursor-pointer"
-          >
-            zudio
-          </h1>
-
+    <div className="min-h-screen bg-black text-white">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto flex h-16 md:h-[72px] items-center justify-between px-4 md:px-8">
+          
+          {/* Logo */}
           <button
             type="button"
-            onClick={() => setMenuOpen((prev) => !prev)}
-            className="rounded-full border border-white/20 px-3 py-2 text-sm text-white md:hidden"
+            onClick={() => navigate('/home')}
+            className="text-2xl md:text-3xl font-bold tracking-[0.25em] uppercase"
           >
-            {menuOpen ? 'Close' : 'Menu'}
+            ZUDIO
           </button>
 
-          <nav className="hidden gap-8 text-base lg:gap-16 lg:text-lg md:flex items-center">
-            {navItems.map((item, index) => (
+          {/* Desktop Navbar */}
+          <nav className="hidden md:flex items-center gap-6 text-sm uppercase tracking-wider">
+            {categories.map((cat) => (
               <NavLink
-                key={index}
-                to={item.path}
-                ref={(el) => (linksRef.current[index] = el)}
-                className="relative text-white transition-all duration-300 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-gray-300 after:transition-all after:duration-500 hover:after:w-full hover:text-gray-400"
+                key={cat.path}
+                to={cat.path}
+                className={navLinkClass}
               >
-                {item.name}
+                {cat.name}
               </NavLink>
             ))}
+          </nav>
+
+          {/* Right Section */}
+          <div className="flex items-center gap-3 md:gap-5">
             <button
               type="button"
-              onClick={() => {
-                logout();
-                nav('/');
-              }}
-              className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-white hover:bg-white/10"
+              onClick={() => navigate('/home/cart')}
+              className="relative p-2 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Cart"
             >
-              Logout ({user?.name || 'User'})
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
+
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-white text-black text-xs font-bold rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </button>
-          </nav>
+
+            <span className="hidden sm:block text-sm text-white/60">
+              {user?.name || 'User'}
+            </span>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="hidden md:block border border-white/20 px-4 py-2 rounded-lg text-xs hover:bg-white hover:text-black transition-all duration-300"
+            >
+              Logout
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              className="md:hidden p-2 rounded-lg border border-white/20"
+            >
+              {menuOpen ? '✕' : '☰'}
+            </button>
+          </div>
         </div>
 
+        {/* Mobile Menu */}
         {menuOpen && (
-          <nav className="border-t border-white/10 bg-black/95 px-4 pb-4 pt-3 md:hidden">
-            {navItems.map((item) => (
+          <nav className="md:hidden border-t border-white/10 px-4 py-4 space-y-1 bg-black">
+            {categories.map((cat) => (
               <NavLink
-                key={item.path}
-                to={item.path}
+                key={cat.path}
+                to={cat.path}
                 onClick={() => setMenuOpen(false)}
-                className="block rounded-xl px-3 py-3 text-white hover:bg-white/10"
+                className="block py-3 px-3 rounded-lg hover:bg-white/10 uppercase tracking-widest text-sm"
               >
-                {item.name}
+                {cat.name}
               </NavLink>
             ))}
+
             <button
               type="button"
               onClick={() => {
-                logout();
                 setMenuOpen(false);
-                nav('/');
+                handleLogout();
               }}
-              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-left text-white hover:bg-white/10"
+              className="w-full text-left py-3 px-3 rounded-lg hover:bg-white/10 text-sm"
             >
-              Logout ({user?.name || 'User'})
+              Logout
             </button>
           </nav>
         )}
       </header>
 
-      <main className="pt-20">
+      <main className="pt-16 md:pt-[72px]">
         <Outlet />
       </main>
     </div>

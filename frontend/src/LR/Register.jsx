@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import { registerUser } from '../services/authService';
 import { useAuth } from '../hooks/useAuth';
 import { getApiErrorMessage } from '../utils/getApiErrorMessage';
-import AuthPageShell from './AuthPageShell';
 import AuthField, { authInputClass } from './AuthField';
 
 const passwordRules = {
@@ -16,7 +15,7 @@ const passwordRules = {
   },
 };
 
-const Register = ({ setToggle }) => {
+const Register = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,74 +39,57 @@ const Register = ({ setToggle }) => {
   };
 
   return (
-    <AuthPageShell
-      title="Join"
-      subtitle="Create your account and start exploring"
-      footer={
-        <div className="text-center text-sm text-white/40">
-          Already have an account?{' '}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <AuthField label="Name" error={errors.name}>
+        <input
+          type="text"
+          {...register('name', { required: 'Name is required', minLength: { value: 2, message: 'At least 2 characters' } })}
+          className={authInputClass}
+          placeholder="Enter your name"
+        />
+      </AuthField>
+
+      <AuthField label="Email" error={errors.email}>
+        <input
+          type="email"
+          {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' } })}
+          className={authInputClass}
+          placeholder="Enter your email"
+        />
+      </AuthField>
+
+      <AuthField label="Password" error={errors.password}>
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            {...register('password', passwordRules)}
+            className={`${authInputClass} pr-20`}
+            placeholder="Enter your password"
+          />
           <button
             type="button"
-            onClick={() => setToggle(false)}
-            className="auth-link font-medium text-white"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-xs uppercase tracking-[0.2em] text-white/50 hover:text-white transition-colors"
           >
-            Sign in
+            {showPassword ? 'Hide' : 'Show'}
           </button>
         </div>
-      }
-    >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <AuthField label="Name" error={errors.name}>
-          <input
-            type="text"
-            {...register('name', { required: 'Name is required' })}
-            className={authInputClass}
-            placeholder="Enter your name"
-          />
-        </AuthField>
+      </AuthField>
 
-        <AuthField label="Email" error={errors.email}>
-          <input
-            type="text"
-            {...register('email', { required: 'Email is required' })}
-            className={authInputClass}
-            placeholder="Enter your email"
-          />
-        </AuthField>
+      {errorMessage && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+          {errorMessage}
+        </div>
+      )}
 
-        <AuthField label="Password" error={errors.password}>
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              {...register('password', passwordRules)}
-              className={`${authInputClass} pr-20`}
-              placeholder="Enter your password"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-[0.18em] text-white/40 hover:text-white transition-colors"
-            >
-              {showPassword ? 'Hide' : 'Show'}
-            </button>
-          </div>
-        </AuthField>
-
-        {errorMessage && (
-          <div className="rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white/80">
-            {errorMessage}
-          </div>
-        )}
-
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="auth-btn w-full rounded-xl bg-white py-3.5 text-sm font-semibold uppercase tracking-[0.25em] text-black disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSubmitting ? 'Creating...' : 'Create Account'}
-        </button>
-      </form>
-    </AuthPageShell>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="auth-btn w-full rounded-xl bg-white py-4 text-base font-semibold uppercase tracking-[0.2em] text-black disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isSubmitting ? 'Creating...' : 'Create Account'}
+      </button>
+    </form>
   );
 };
 
